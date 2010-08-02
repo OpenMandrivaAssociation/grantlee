@@ -12,6 +12,7 @@ Source0:        http://downloads.%{name}.org/%{name}-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	cmake
 BuildRequires:	qt4-devel
+BuildRequires:  kde4-macros
 %if 0%{?apidocs}   
 BuildRequires:  doxygen
 %endif
