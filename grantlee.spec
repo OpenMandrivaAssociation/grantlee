@@ -1,18 +1,14 @@
 %define apidox 0
 %{?_without_apidox:%global compile_apidox 0}
 
-%define major 0
-%define libname %mklibname %name %major
-
-
 Name:           grantlee
 Summary:        Qt string template engine based on the Django template system
 Group:          System Environment/Libraries
-Version:        0.1.1
+Version:        0.1.4
 Release:        %mkrel 1
 License:        LGPLv2+
 URL:            http://www.gitorious.org/grantlee/pages/Home
-Source0:        http://downloads.%{name}.org/%{name}-v%{version}.tar.gz
+Source0:        http://downloads.%{name}.org/%{name}-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	cmake
 BuildRequires:	qt4-devel
@@ -44,23 +40,43 @@ templates, see the documentation.
 
 #--------------------------------------------------------------------
 
-%package -n %libname
+%define grantlee_gui_major 0
+%define libgrantlee_gui %mklibname grantlee_gui %grantlee_gui_major
+
+%package -n %libgrantlee_gui
 Summary:	Library files for %{name}
 Group:		System/Libraries
 
-%description  -n %libname
+%description  -n %libgrantlee_gui
 Libraries for %{name}.
 
-%files -n %libname
+%files -n %libgrantlee_gui
 %defattr(-,root,root,-)
-%{_libdir}/lib%{name}_*.so.%{major}*
+%{_libdir}/libgrantlee_gui.so.%{grantlee_gui_major}*
+
+#--------------------------------------------------------------------
+
+%define grantlee_core_major 0
+%define libgrantlee_core %mklibname grantlee_core %grantlee_core_major
+
+%package -n %libgrantlee_core
+Summary:    Library files for %{name}
+Group:      System/Libraries
+
+%description  -n %libgrantlee_core
+Libraries for %{name}.
+
+%files -n %libgrantlee_core
+%defattr(-,root,root,-)
+%{_libdir}/libgrantlee_core.so.%{grantlee_core_major}*
 
 #--------------------------------------------------------------------
 
 %package devel
 Summary:	Development files for %{name}
 Group:		Development/Libraries
-Requires:	%{name} = %{version}-%{release}
+Requires:	%libgrantlee_gui = %{version}-%{release}
+Requires:   %libgrantlee_core = %{version}-%{release}
 Provides:	lib%{name} = %{version}-%{release}
 
 %description devel
@@ -90,7 +106,7 @@ format for easy browsing.
 #--------------------------------------------------------------------
 
 %prep
-%setup -qn %{name}-v%{version}
+%setup -qn %{name}-%{version}
 
 %build
 %cmake_kde4
