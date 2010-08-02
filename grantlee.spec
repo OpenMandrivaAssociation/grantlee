@@ -75,7 +75,7 @@ Libraries for %{name}.
 
 %package devel
 Summary:	Development files for %{name}
-Group:		Development/Libraries
+Group:		Development/KDE and Qt 
 Requires:	%libgrantlee_gui = %{version}-%{release}
 Requires:   %libgrantlee_core = %{version}-%{release}
 Provides:	lib%{name} = %{version}-%{release}
