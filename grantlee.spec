@@ -37,7 +37,7 @@ templates, see the documentation.
 %files
 %defattr(-,root,root,-)
 %doc AUTHORS CHANGELOG COPYING.LIB README GOALS
-%{_libdir}/%{name}/0.1
+%{_libdir}/%{name}/0.2
 
 #--------------------------------------------------------------------
 
