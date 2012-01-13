@@ -5,11 +5,10 @@ Name:           grantlee
 Summary:        Qt string template engine based on the Django template system
 Group:          System/Libraries
 Version:        0.2.0
-Release:        %mkrel 1
+Release:        2
 License:        LGPLv2+
 URL:            http://www.gitorious.org/grantlee/pages/Home
 Source0:        http://downloads.%{name}.org/%{name}-%{version}.tar.gz
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	cmake
 BuildRequires:	qt4-devel
 BuildRequires:  kde4-macros
@@ -119,15 +118,9 @@ make docs
 %endif
 
 %install
-rm -rf %{buildroot}
 %makeinstall_std -C build
 
 %if 0%{?apidox}
 mkdir -p %{buildroot}%{_docdir}/HTML/en/grantlee-apidocs
 cp -prf build/apidocs/html/* %{buildroot}%{_docdir}/HTML/en/%{name}-apidocs
 %endif
-
-%clean
-rm -rf %{buildroot}
-
-
