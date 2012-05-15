@@ -5,7 +5,7 @@ Name:           grantlee
 Summary:        Qt string template engine based on the Django template system
 Group:          System/Libraries
 Version:        0.2.0
-Release:        %mkrel 2
+Release:        %mkrel 3
 License:        LGPLv2+
 URL:            http://www.gitorious.org/grantlee/pages/Home
 Source0:        http://downloads.%{name}.org/%{name}-%{version}.tar.gz
