@@ -4,8 +4,8 @@
 Name:           grantlee
 Summary:        Qt string template engine based on the Django template system
 Group:          System/Libraries
-Version:        0.2.0
-Release:        %mkrel 3
+Version: 0.3.0
+Release: 1
 License:        LGPLv2+
 URL:            http://www.gitorious.org/grantlee/pages/Home
 Source0:        http://downloads.%{name}.org/%{name}-%{version}.tar.gz
@@ -17,26 +17,27 @@ BuildRequires:  doxygen
 %endif
 
 %description
-Grantlee is a plugin based String Template system written using the Qt framework.
-The goals of the project are to make it easier for application developers to
-separate the structure of documents from the data they contain, opening the door
-for theming.
+Grantlee is a plugin based String Template system written using the Qt
+framework. The goals of the project are to make it easier for application
+developers to separate the structure of documents from the data they
+contain, opening the door for theming.
 
-The syntax is intended to follow the syntax of the Django template system, and
-the design of Django is reused in Grantlee. Django is covered by a BSD style license.
+The syntax is intended to follow the syntax of the Django template
+system, and the design of Django is reused in Grantlee. Django is covered
+by a BSD style license.
 
-Part of the design of both is that application developers can extend the syntax by
-implementing their own tags and filters. For details of how to do that, see the API
-documentation.
+Part of the design of both is that application developers can extend the
+syntax by implementing their own tags and filters. For details of how to
+do that, see the API documentation.
 
-For template authors, different applications using Grantlee will present the same
-interface and core syntax for creating new themes. For details of how to write
-templates, see the documentation.
+For template authors, different applications using Grantlee will present
+the same interface and core syntax for creating new themes. For details
+of how to write templates, see the documentation.
 
 %files
 %defattr(-,root,root,-)
 %doc AUTHORS CHANGELOG COPYING.LIB README GOALS
-%{_libdir}/%{name}/0.2
+%{_libdir}/%{name}/0.1
 
 #--------------------------------------------------------------------
 
@@ -84,7 +85,7 @@ Libraries and header files to develop applications that use %{name}.
 
 %files devel
 %defattr(-,root,root,-)
-%{_libdir}/cmake/grantlee/*.cmake
+%{_libdir}/%{name}/*.cmake
 %{_includedir}/%{name}
 %{_includedir}/%{name}_core.h
 %{_includedir}/%{name}_templates.h
@@ -118,9 +119,39 @@ make docs
 %endif
 
 %install
+rm -rf %{buildroot}
 %makeinstall_std -C build
 
 %if 0%{?apidox}
 mkdir -p %{buildroot}%{_docdir}/HTML/en/grantlee-apidocs
 cp -prf build/apidocs/html/* %{buildroot}%{_docdir}/HTML/en/%{name}-apidocs
 %endif
+
+%clean
+rm -rf %{buildroot}
+
+
+
+
+%changelog
+* Sun Apr 10 2011 Funda Wang <fwang@mandriva.org> 0.1.8-1mdv2011.0
++ Revision: 652197
+- new version 0.1.8
+
+* Tue Aug 03 2010 Nicolas Lécureuil <nlecureuil@mandriva.com> 0.1.4-1mdv2011.0
++ Revision: 565191
+- Fix groups
+- Add Buildrequires
+- Fix groups
+- New version 0.1.4
+  Adapt Spec file to kde policy
+- start to clean the spec file ( next step => clean lib package)
+
+  + José Melo <mmodem@mandriva.org>
+    - add needed changes to for a correct packaging policy (library files in a lib packge) and fix the apidox variable name and enable it to build since its tested.
+    - import grantlee
+
+
+* Tue Jun 29 2010 Zé <ze@mandriva.org> 0.1.1-1
+- first release
+
