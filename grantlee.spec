@@ -37,7 +37,7 @@ of how to write templates, see the documentation.
 %files
 %defattr(-,root,root,-)
 %doc AUTHORS CHANGELOG COPYING.LIB README GOALS
-%{_libdir}/%{name}/0.1
+%{_libdir}/%{name}/?.?
 
 #--------------------------------------------------------------------
 
@@ -85,7 +85,7 @@ Libraries and header files to develop applications that use %{name}.
 
 %files devel
 %defattr(-,root,root,-)
-%{_libdir}/%{name}/*.cmake
+%{_libdir}/cmake/%name
 %{_includedir}/%{name}
 %{_includedir}/%{name}_core.h
 %{_includedir}/%{name}_templates.h
