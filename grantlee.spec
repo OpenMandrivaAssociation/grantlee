@@ -1,19 +1,19 @@
 %define apidox 0
 %{?_without_apidox:%global compile_apidox 0}
 
-Name:           grantlee
-Summary:        Qt string template engine based on the Django template system
-Group:          System/Libraries
-Version: 0.3.0
-Release: 1
-License:        LGPLv2+
-URL:            http://www.gitorious.org/grantlee/pages/Home
-Source0:        http://downloads.%{name}.org/%{name}-%{version}.tar.gz
+Summary:	Qt string template engine based on the Django template system
+Name:		grantlee
+Version:	0.3.0
+Release:	1
+Group:		System/Libraries
+License:	LGPLv2+
+Url:		http://www.gitorious.org/grantlee/pages/Home
+Source0:	http://downloads.%{name}.org/%{name}-%{version}.tar.gz
 BuildRequires:	cmake
+BuildRequires:	kde4-macros
 BuildRequires:	qt4-devel
-BuildRequires:  kde4-macros
 %if 0%{?apidocs}   
-BuildRequires:  doxygen
+BuildRequires:	doxygen
 %endif
 
 %description
@@ -35,7 +35,6 @@ the same interface and core syntax for creating new themes. For details
 of how to write templates, see the documentation.
 
 %files
-%defattr(-,root,root,-)
 %doc AUTHORS CHANGELOG COPYING.LIB README GOALS
 %{_libdir}/%{name}/?.?
 
@@ -52,7 +51,6 @@ Group:		System/Libraries
 Libraries for %{name}.
 
 %files -n %libgrantlee_gui
-%defattr(-,root,root,-)
 %{_libdir}/libgrantlee_gui.so.%{grantlee_gui_major}*
 
 #--------------------------------------------------------------------
@@ -61,14 +59,13 @@ Libraries for %{name}.
 %define libgrantlee_core %mklibname grantlee_core %grantlee_core_major
 
 %package -n %libgrantlee_core
-Summary:    Library files for %{name}
-Group:      System/Libraries
+Summary:	Library files for %{name}
+Group:		System/Libraries
 
 %description  -n %libgrantlee_core
 Libraries for %{name}.
 
 %files -n %libgrantlee_core
-%defattr(-,root,root,-)
 %{_libdir}/libgrantlee_core.so.%{grantlee_core_major}*
 
 #--------------------------------------------------------------------
@@ -77,15 +74,14 @@ Libraries for %{name}.
 Summary:	Development files for %{name}
 Group:		Development/KDE and Qt 
 Requires:	%libgrantlee_gui = %{version}-%{release}
-Requires:   %libgrantlee_core = %{version}-%{release}
+Requires:	%libgrantlee_core = %{version}-%{release}
 Provides:	lib%{name} = %{version}-%{release}
 
 %description devel
 Libraries and header files to develop applications that use %{name}.
 
 %files devel
-%defattr(-,root,root,-)
-%{_libdir}/cmake/%name
+%{_libdir}/cmake/%{name}
 %{_includedir}/%{name}
 %{_includedir}/%{name}_core.h
 %{_includedir}/%{name}_templates.h
@@ -108,7 +104,7 @@ format for easy browsing.
 #--------------------------------------------------------------------
 
 %prep
-%setup -qn %{name}-%{version}
+%setup -q
 
 %build
 %cmake_kde4
@@ -119,39 +115,10 @@ make docs
 %endif
 
 %install
-rm -rf %{buildroot}
 %makeinstall_std -C build
 
 %if 0%{?apidox}
 mkdir -p %{buildroot}%{_docdir}/HTML/en/grantlee-apidocs
 cp -prf build/apidocs/html/* %{buildroot}%{_docdir}/HTML/en/%{name}-apidocs
 %endif
-
-%clean
-rm -rf %{buildroot}
-
-
-
-
-%changelog
-* Sun Apr 10 2011 Funda Wang <fwang@mandriva.org> 0.1.8-1mdv2011.0
-+ Revision: 652197
-- new version 0.1.8
-
-* Tue Aug 03 2010 Nicolas Lécureuil <nlecureuil@mandriva.com> 0.1.4-1mdv2011.0
-+ Revision: 565191
-- Fix groups
-- Add Buildrequires
-- Fix groups
-- New version 0.1.4
-  Adapt Spec file to kde policy
-- start to clean the spec file ( next step => clean lib package)
-
-  + José Melo <mmodem@mandriva.org>
-    - add needed changes to for a correct packaging policy (library files in a lib packge) and fix the apidox variable name and enable it to build since its tested.
-    - import grantlee
-
-
-* Tue Jun 29 2010 Zé <ze@mandriva.org> 0.1.1-1
-- first release
 
