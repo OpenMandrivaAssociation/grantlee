@@ -4,7 +4,7 @@
 Summary:	Qt string template engine based on the Django template system
 Name:		grantlee
 Version:	0.3.0
-Release:	1
+Release:	2
 Group:		System/Libraries
 License:	LGPLv2+
 Url:		http://www.gitorious.org/grantlee/pages/Home
@@ -12,7 +12,7 @@ Source0:	http://downloads.%{name}.org/%{name}-%{version}.tar.gz
 BuildRequires:	cmake
 BuildRequires:	kde4-macros
 BuildRequires:	qt4-devel
-%if 0%{?apidocs}   
+%if 0%{?apidocs}
 BuildRequires:	doxygen
 %endif
 
@@ -41,41 +41,40 @@ of how to write templates, see the documentation.
 #--------------------------------------------------------------------
 
 %define grantlee_gui_major 0
-%define libgrantlee_gui %mklibname grantlee_gui %grantlee_gui_major
+%define libgrantlee_gui %mklibname grantlee_gui %{grantlee_gui_major}
 
-%package -n %libgrantlee_gui
+%package -n %{libgrantlee_gui}
 Summary:	Library files for %{name}
 Group:		System/Libraries
 
-%description  -n %libgrantlee_gui
+%description  -n %{libgrantlee_gui}
 Libraries for %{name}.
 
-%files -n %libgrantlee_gui
+%files -n %{libgrantlee_gui}
 %{_libdir}/libgrantlee_gui.so.%{grantlee_gui_major}*
 
 #--------------------------------------------------------------------
 
 %define grantlee_core_major 0
-%define libgrantlee_core %mklibname grantlee_core %grantlee_core_major
+%define libgrantlee_core %mklibname grantlee_core %{grantlee_core_major}
 
-%package -n %libgrantlee_core
+%package -n %{libgrantlee_core}
 Summary:	Library files for %{name}
 Group:		System/Libraries
 
-%description  -n %libgrantlee_core
+%description  -n %{libgrantlee_core}
 Libraries for %{name}.
 
-%files -n %libgrantlee_core
+%files -n %{libgrantlee_core}
 %{_libdir}/libgrantlee_core.so.%{grantlee_core_major}*
 
 #--------------------------------------------------------------------
 
 %package devel
 Summary:	Development files for %{name}
-Group:		Development/KDE and Qt 
-Requires:	%libgrantlee_gui = %{version}-%{release}
-Requires:	%libgrantlee_core = %{version}-%{release}
-Provides:	lib%{name} = %{version}-%{release}
+Group:		Development/KDE and Qt
+Requires:	%{libgrantlee_gui} = %{version}-%{release}
+Requires:	%{libgrantlee_core} = %{version}-%{release}
 
 %description devel
 Libraries and header files to develop applications that use %{name}.
