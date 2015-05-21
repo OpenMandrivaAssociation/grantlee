@@ -3,6 +3,8 @@
 
 Summary:	Qt string template engine based on the Django template system
 Name:		grantlee
+# (tpg) do not update to 0.5.0 and newer versions
+# Qt4 is still needed for kdepim
 Version:	0.4.0
 Release:	1
 Group:		System/Libraries
@@ -84,6 +86,7 @@ Libraries and header files to develop applications that use %{name}.
 %{_includedir}/%{name}
 %{_includedir}/%{name}_core.h
 %{_includedir}/%{name}_templates.h
+%{_includedir}/%{name}_textdocument.h
 %{_libdir}/lib%{name}*.so
 
 #--------------------------------------------------------------------
