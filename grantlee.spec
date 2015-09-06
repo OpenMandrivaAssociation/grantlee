@@ -1,22 +1,23 @@
-%define apidox 0
-%{?_without_apidox:%global compile_apidox 0}
+%define grantlee_major 5
+%define grantlee_minor 0
 
 Summary:	Qt string template engine based on the Django template system
 Name:		grantlee
-# (tpg) do not update to 0.5.0 and newer versions
-# Qt4 is still needed for kdepim
-Version:	0.4.0
-Release:	3
+Version:	5.0.0
+Release:	1
 Group:		System/Libraries
 License:	LGPLv2+
-Url:		http://www.gitorious.org/grantlee/pages/Home
+Url:		https://github.com/steveire/grantlee
 Source0:	http://downloads.grantlee.org/%{name}-%{version}.tar.gz
 BuildRequires:	cmake
-BuildRequires:	kde4-macros
-BuildRequires:	qt4-devel
-%if 0%{?apidocs}
+
+BuildRequires:  pkgconfig(Qt5Core) 
+BuildRequires:  pkgconfig(Qt5Gui) 
+BuildRequires:  pkgconfig(Qt5Test) 
+BuildRequires:  pkgconfig(Qt5Script) 
+BuildRequires:	pkgconfig(Qt5Help)
+
 BuildRequires:	doxygen
-%endif
 
 %description
 Grantlee is a plugin based String Template system written using the Qt
@@ -37,87 +38,72 @@ the same interface and core syntax for creating new themes. For details
 of how to write templates, see the documentation.
 
 %files
-%doc AUTHORS CHANGELOG COPYING.LIB README GOALS
-%{_libdir}/%{name}/?.?
+%doc AUTHORS CHANGELOG COPYING.LIB README 
+%dir %{_libdir}/%{name}
+%dir %{_libdir}/%{name}/%{grantlee_major}.%{grantlee_minor}
+%{_libdir}/%{name}/%{grantlee_major}.%{grantlee_minor}/*
 
 #--------------------------------------------------------------------
 
-%define grantlee_gui_major 0
-%define libgrantlee_gui %mklibname grantlee_gui %{grantlee_gui_major}
+%define libgrantlee_template %mklibname grantlee_template %{grantlee_major}
 
-%package -n %{libgrantlee_gui}
-Summary:	Library files for %{name}
-Group:		System/Libraries
+%package -n %libgrantlee_template
+Summary:        Library files for %{name}
+Group:          System/Libraries
 
-%description  -n %{libgrantlee_gui}
+%description  -n %libgrantlee_template
 Libraries for %{name}.
 
-%files -n %{libgrantlee_gui}
-%{_libdir}/libgrantlee_gui.so.%{grantlee_gui_major}*
+%files -n %libgrantlee_template
+%{_libdir}/libGrantlee_Templates.so.%{grantlee_major}.%{grantlee_minor}*
+%{_libdir}/libGrantlee_Templates.so.%{grantlee_major}
 
 #--------------------------------------------------------------------
 
-%define grantlee_core_major 0
-%define libgrantlee_core %mklibname grantlee_core %{grantlee_core_major}
+%define libgrantlee_textdocument %mklibname grantlee_textdocument %{grantlee_major}
 
-%package -n %{libgrantlee_core}
-Summary:	Library files for %{name}
-Group:		System/Libraries
+%package -n %libgrantlee_textdocument
+Summary:    Library files for %{name}
+Group:      System/Libraries
 
-%description  -n %{libgrantlee_core}
+%description  -n %libgrantlee_textdocument
 Libraries for %{name}.
 
-%files -n %{libgrantlee_core}
-%{_libdir}/libgrantlee_core.so.%{grantlee_core_major}*
+%files -n %libgrantlee_textdocument
+%{_libdir}/libGrantlee_TextDocument.so.%{grantlee_major}.%{grantlee_minor}*
+%{_libdir}/libGrantlee_TextDocument.so.%{grantlee_major}
 
 #--------------------------------------------------------------------
 
 %package devel
-Summary:	Development files for %{name}
-Group:		Development/KDE and Qt
-Requires:	%{libgrantlee_gui} = %{version}-%{release}
-Requires:	%{libgrantlee_core} = %{version}-%{release}
+Summary:       Development files for %{name}
+Group:         Development/KDE and Qt
+Requires:      %name = %{version}-%{release}
+Requires:      %libgrantlee_template = %{version}-%{release}
+Requires:      %libgrantlee_textdocument = %{version}-%{release}
 
 %description devel
 Libraries and header files to develop applications that use %{name}.
 
 %files devel
-%{_libdir}/cmake/%{name}
 %{_includedir}/%{name}
-%{_includedir}/%{name}_core.h
-%{_includedir}/%{name}_templates.h
-%{_includedir}/%{name}_textdocument.h
-%{_libdir}/lib%{name}*.so
-
-#--------------------------------------------------------------------
-
-%if 0%{?apidox}
-%package apidocs
-Group:		Development/Documentation
-Summary:	Grantlee API documentation
-
-%description apidocs
-This package includes the Grantlee API documentation in HTML
-format for easy browsing.
-
-%files apidocs
-%doc %{_docdir}/HTML/en/grantlee-apidocs
-%endif
-#--------------------------------------------------------------------
+%{_includedir}/*.h
+%{_libdir}/*.so
+%{_libdir}/cmake/Grantlee5
 
 %prep
 %setup -q
 
 %build
-%cmake_kde4
+%cmake_kde5
 
-%make
+%ninja
 %if 0%{?apidox}
 make docs
 %endif
 
 %install
-%makeinstall_std -C build
+%ninja_install -C build
 
 %if 0%{?apidox}
 mkdir -p %{buildroot}%{_docdir}/HTML/en/grantlee-apidocs
