@@ -3,8 +3,8 @@
 
 Summary:	Qt string template engine based on the Django template system
 Name:		grantlee
-Version:	0.3.0
-Release:	3
+Version:	0.5.1
+Release:	1
 Group:		System/Libraries
 License:	LGPLv2+
 Url:		http://www.gitorious.org/grantlee/pages/Home
@@ -35,7 +35,7 @@ the same interface and core syntax for creating new themes. For details
 of how to write templates, see the documentation.
 
 %files
-%doc AUTHORS CHANGELOG COPYING.LIB README GOALS
+%doc AUTHORS CHANGELOG COPYING.LIB README
 %{_libdir}/%{name}/?.?
 
 #--------------------------------------------------------------------
@@ -84,6 +84,7 @@ Libraries and header files to develop applications that use %{name}.
 %{_includedir}/%{name}
 %{_includedir}/%{name}_core.h
 %{_includedir}/%{name}_templates.h
+%{_includedir}/%{name}_textdocument.h
 %{_libdir}/lib%{name}*.so
 
 #--------------------------------------------------------------------
