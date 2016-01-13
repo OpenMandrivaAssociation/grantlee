@@ -94,7 +94,7 @@ Libraries and header files to develop applications that use %{name}.
 %cmake_kde5
 
 %build
-%ninja -c Build
+%ninja -C build
 
 %if 0%{?apidox}
 make docs
