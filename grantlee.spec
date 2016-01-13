@@ -4,20 +4,17 @@
 Summary:	Qt string template engine based on the Django template system
 Name:		grantlee
 Version:	5.0.0
-Release:	1
+Release:	2
 Group:		System/Libraries
 License:	LGPLv2+
 Url:		https://github.com/steveire/grantlee
 Source0:	http://downloads.grantlee.org/%{name}-%{version}.tar.gz
-BuildRequires:	cmake
-
 BuildRequires:	cmake(ECM)
-BuildRequires:  pkgconfig(Qt5Core) 
-BuildRequires:  pkgconfig(Qt5Gui) 
-BuildRequires:  pkgconfig(Qt5Test) 
-BuildRequires:  pkgconfig(Qt5Script) 
+BuildRequires:	pkgconfig(Qt5Core)
+BuildRequires:	pkgconfig(Qt5Gui)
+BuildRequires:	pkgconfig(Qt5Test)
+BuildRequires:	pkgconfig(Qt5Script)
 BuildRequires:	pkgconfig(Qt5Help)
-
 BuildRequires:	doxygen
 
 %description
@@ -94,11 +91,11 @@ Libraries and header files to develop applications that use %{name}.
 
 %prep
 %setup -q
-
-%build
 %cmake_kde5
 
-%ninja
+%build
+%ninja -c Build
+
 %if 0%{?apidox}
 make docs
 %endif
