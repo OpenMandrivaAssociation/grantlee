@@ -1,10 +1,10 @@
 %define grantlee_major 5
-%define grantlee_minor 0
+%define grantlee_minor 1
 
 Summary:	Qt string template engine based on the Django template system
 Name:		grantlee
-Version:	5.0.0
-Release:	2
+Version:	5.1.0
+Release:	1
 Group:		System/Libraries
 License:	LGPLv2+
 Url:		https://github.com/steveire/grantlee
@@ -36,7 +36,7 @@ the same interface and core syntax for creating new themes. For details
 of how to write templates, see the documentation.
 
 %files
-%doc AUTHORS CHANGELOG COPYING.LIB README 
+%doc AUTHORS CHANGELOG COPYING.LIB
 %dir %{_libdir}/%{name}
 %dir %{_libdir}/%{name}/%{grantlee_major}.%{grantlee_minor}
 %{_libdir}/%{name}/%{grantlee_major}.%{grantlee_minor}/*
