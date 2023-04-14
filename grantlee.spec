@@ -1,21 +1,42 @@
+# FIXME at the moment, file names are identical between
+# Qt5 and Qt6 builds, so we can build only one
+%bcond_with qt6
+
 %define grantlee_major 5
-%define grantlee_minor 2
+%define grantlee_minor 3
 
 Summary:	Qt string template engine based on the Django template system
 Name:		grantlee
-Version:	5.2.0
-Release:	2
+Version:	5.3.1
+Release:	1
 Group:		System/Libraries
 License:	LGPLv2+
 Url:		https://github.com/steveire/grantlee
-Source0:	http://downloads.grantlee.org/%{name}-%{version}.tar.gz
+Source0:	https://github.com/steveire/grantlee/releases/download/v%{version}/grantlee-%{version}.tar.gz
 BuildRequires:	cmake(ECM)
 BuildRequires:	pkgconfig(Qt5Core)
 BuildRequires:	pkgconfig(Qt5Gui)
 BuildRequires:	pkgconfig(Qt5Test)
 BuildRequires:	pkgconfig(Qt5Script)
+BuildRequires:	pkgconfig(Qt5Qml)
 BuildRequires:	pkgconfig(Qt5Help)
+BuildRequires:	cmake(Qt5LinguistTools)
 BuildRequires:	doxygen
+%if %{with qt6}
+BuildRequires:	cmake(Qt6Core)
+BuildRequires:	cmake(Qt6CoreTools)
+BuildRequires:	cmake(Qt6DBus)
+BuildRequires:	cmake(Qt6DBusTools)
+BuildRequires:	cmake(Qt6Gui)
+BuildRequires:	cmake(Qt6GuiTools)
+BuildRequires:	cmake(Qt6LinguistTools)
+BuildRequires:	cmake(Qt6Network)
+BuildRequires:	cmake(Qt6QmlIntegration)
+BuildRequires:	cmake(Qt6QmlTools)
+BuildRequires:	cmake(Qt6Qml)
+BuildRequires:	cmake(Qt6Test)
+BuildRequires:	cmake(Qt6)
+%endif
 
 %description
 Grantlee is a plugin based String Template system written using the Qt
@@ -90,21 +111,28 @@ Libraries and header files to develop applications that use %{name}.
 %{_libdir}/cmake/Grantlee5
 
 %prep
-%setup -q
+%autosetup -p1
 %cmake_kde5
+cd ..
+
+%if %{with qt6}
+export CMAKE_BUILD_DIR=build-qt6
+%cmake \
+	-DGRANTLEE_BUILD_WITH_QT6:BOOL=ON \
+	-DKDE_INSTALL_USE_QT_SYS_PATHS:BOOL=ON \
+	-G Ninja
+%endif
 
 %build
-%ninja -C build
+%ninja_build -C build
 
-%if 0%{?apidox}
-make docs
+%if %{with qt6}
+%ninja_build -C build-qt6
 %endif
 
 %install
-%ninja_install -C build
-
-%if 0%{?apidox}
-mkdir -p %{buildroot}%{_docdir}/HTML/en/grantlee-apidocs
-cp -prf build/apidocs/html/* %{buildroot}%{_docdir}/HTML/en/%{name}-apidocs
+%if %{with qt6}
+%ninja_install -C build-qt6
 %endif
 
+%ninja_install -C build
